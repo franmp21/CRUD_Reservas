@@ -2,15 +2,15 @@
   "reservas": [
     {
       "id": 1,
-      "reserva": "Sala 22",
+      "reserva": "Sala 10",
       "profesor": "Juan",
-      "horas": "2"
+      "horas": "3"
     },
     {
       "id": 2,
-      "reserva": "Sala 4",
+      "reserva": "Sala 11",
       "profesor": "Miguel",
-      "horas": "2"
+      "horas": "3"
     },
     {
       "reserva": "Sala 2",
@@ -29,6 +29,24 @@
       "profesor": "Marco",
       "horas": "2",
       "id": 5
+    },
+    {
+      "reserva": "Sala 22",
+      "profesor": "Juan",
+      "horas": "2",
+      "id": 6
+    },
+    {
+      "reserva": "Sala 22",
+      "profesor": "Juan",
+      "horas": "2",
+      "id": 7
+    },
+    {
+      "reserva": "Sala 45",
+      "profesor": "Luna",
+      "horas": "4",
+      "id": 8
     }
   ]
 }

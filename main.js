@@ -1,17 +1,62 @@
 import { anadeReserva, eliminaReserva, modificaReserva, obtenReservas } from './crud.js'
+
 let listadoReservas = []
-let btn_enviar = document.getElementById('btn_enviar')
-const lista = document.getElementById('listado')
+let id=""
+let editar = false
 const formulario = document.getElementById('formulario')
+
+
 window.addEventListener('DOMContentLoaded', ()=>{
     obtenReservas()
     .then(res =>{
         listadoReservas = res.data
+        console.log(listadoReservas)
         muestraReservas()
     })
 })
-let id=""
-let editar = false
+
+const muestraReservas = () => {
+    const lista = document.getElementById('listado')
+    let html = "" 
+    listadoReservas.forEach(el => {
+        const {id, reserva, profesor, horas} = el
+        html += `
+            <li>
+                <h1>${reserva}</h1>
+                <h1>${profesor}</h1>
+                <h1>${horas}</h1>
+                <button class='btn_editar' data-id="${id}">Editar</button>
+                <button class='btn_cancelar' style="display:none">Cancelar</button>
+            </li>
+        `
+    })
+    lista.innerHTML = html
+
+    const botones_editar = document.querySelectorAll('.btn_editar')
+    botones_editar.forEach(btn_editar => {
+        btn_editar.addEventListener('click', (event) => {
+            editar = true
+            console.log('editando')
+            id = event.target.dataset.id
+            const li = event.target.parentNode
+            const btn_cancelar = li.querySelector('.btn_cancelar')
+            btn_cancelar.style.display = 'inline-block'
+        })
+    })
+    const botones_cancelar = document.querySelectorAll('.btn_cancelar')
+    botones_cancelar.forEach(btn_cancelar => {
+        btn_cancelar.addEventListener('click', (event) => {
+            editar = false
+            console.log('editar cancelado')
+            const id = event.target.dataset.id
+            const li = event.target.parentNode
+            const btn_editar = li.querySelector('.btn_editar')
+            btn_cancelar.style.display = 'none'
+            btn_editar.style.display = 'inline-block'
+        })
+    }) 
+}
+
 formulario.addEventListener('submit', (event)=>{
     event.preventDefault()
     const reserva = document.getElementById('in_reserva').value
@@ -24,57 +69,21 @@ formulario.addEventListener('submit', (event)=>{
             horas
         }
         if(editar){
-            modificaReserva(id, nuevaReserva).then(()=>{
-                muestraReservas()
-                console.log('editado')
+            modificaReserva(id, nuevaReserva)       
+            listadoReservas.map((el, idx) =>{
+                if(el.id === id){
+                    listadoReservas[idx] = nuevaReserva
+                }
             })
+            muestraReservas()
+            console.log('editado')
         }else{
-            anadeReserva(nuevaReserva).then(()=>{
-                listadoReservas.push(nuevaReserva)
-                muestraReservas()
-                console.log('añadido')
-            })
+            anadeReserva(nuevaReserva)
+            listadoReservas.push(nuevaReserva)
+            muestraReservas()
+            console.log('añadido')
         }
     }
 })
-const muestraReservas = ()=>{
-    const documento = document.createDocumentFragment()
-    listadoReservas.map(el =>{
-        const elemento = document.createElement('li')
-        const reserva = document.createElement('h1')
-        reserva.textContent = el.reserva
-        elemento.appendChild(reserva)
-        const profesor = document.createElement('h2')
-        profesor.textContent = el.profesor
-        elemento.appendChild(profesor)
-        const horas = document.createElement('h3')
-        horas.textContent = el.horas
-        elemento.appendChild(horas)
-        const boton_editar = document.createElement('button')
-        boton_editar.setAttribute('id', 'btn_editar')
-        boton_editar.textContent = 'Editar'
-        elemento.appendChild(boton_editar)
-        documento.appendChild(elemento)
-        //Escucho al boton editar
-        boton_editar.addEventListener('click', (event)=>{
-            event.preventDefault()
-            editar=true
-            id = el.id
-            const boton_cancelar = document.createElement('button')
-            boton_cancelar.setAttribute('id', 'btn_cancelar')
-            boton_cancelar.textContent = 'Cancelar'
-            elemento.appendChild(boton_cancelar)
-            boton_cancelar.addEventListener('click', (event)=>{
-                event.preventDefault()
-                editar=false
-                id=""
-                elemento.removeChild(boton_cancelar)
-            })
 
-        })
-        
-    })
-    lista.appendChild(documento)
-    
-}
 
