@@ -2,9 +2,9 @@
   "reservas": [
     {
       "id": 1,
-      "reserva": "Sala 10",
+      "reserva": "Sala 22",
       "profesor": "Juan",
-      "horas": "3"
+      "horas": "2"
     },
     {
       "id": 2,
