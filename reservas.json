@@ -1,0 +1,34 @@
+{
+  "reservas": [
+    {
+      "id": 1,
+      "reserva": "Sala 10",
+      "profesor": "Juan",
+      "horas": "3"
+    },
+    {
+      "id": 2,
+      "reserva": "Sala 4",
+      "profesor": "Miguel",
+      "horas": "2"
+    },
+    {
+      "reserva": "Sala 2",
+      "profesor": "Paco",
+      "horas": "5",
+      "id": 3
+    },
+    {
+      "reserva": "Sala 28",
+      "profesor": "David",
+      "horas": "2",
+      "id": 4
+    },
+    {
+      "reserva": "Sala 10",
+      "profesor": "Marco",
+      "horas": "2",
+      "id": 5
+    }
+  ]
+}
